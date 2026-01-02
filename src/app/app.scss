@@ -1,0 +1,196 @@
+@use 'sass:color'; // これを一番上に書く
+/* =========================================
+   1. デザインの基本設定（変数）
+   ========================================= */
+$bg-color: #7d8bae;
+$text-main: #f8fafc;
+$text-muted: #94a3b8;
+$accent-color: #38bdf8;
+$card-bg: #f8b381;
+$grad: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+$max-width: 960px;
+
+/* =========================================
+   2. 全体レイアウト
+   ========================================= */
+:host {
+  display: block;
+  background: $bg-color;
+  color: $text-main;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+section {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px;
+  text-align: center;
+  scroll-snap-align: start;
+
+  .container {
+    max-width: $max-width;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* =========================================
+   3. 各パーツ（SCSSのネストを活用）
+   ========================================= */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  background: rgba(105, 132, 195, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  nav {
+    max-width: $max-width;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+
+    .brand {
+      font-weight: 800;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #ff4b4b;
+      }
+    }
+
+    .links a {
+      color: $text-muted;
+      text-decoration: none;
+      margin-left: 15px;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+
+      &:hover {
+        color: $accent-color;
+      }
+    }
+  }
+}
+
+h1 {
+  font-size: clamp(3rem, 10vw, 5rem);
+  background: $grad;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+
+  .card {
+    background-color: $card-bg;
+    padding: 24px;
+    border-radius: 16px;
+    text-align: left;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      h3 {
+        color: $accent-color;
+      }
+    }
+
+    h3 {
+      margin-top: 0;
+      transition: 0.3s;
+    }
+    .card-desc {
+      // 修正：color: darken($text-main, 10%);
+      color: color.adjust($text-main, $lightness: -10%);
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.chip {
+  display: inline-block;
+  padding: 6px 12px;
+  margin: 5px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 8px;
+  color: $accent-color;
+}
+
+/* フォーム関連 */
+.contact-box {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 500px;
+  margin: 0 auto;
+
+  .input-group {
+    margin-bottom: 20px;
+    text-align: left;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.2);
+      color: #fff;
+
+      &:focus {
+        outline: none;
+        border-color: $accent-color;
+        box-shadow: 0 0 8px $accent-color;
+      }
+    }
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 15px;
+    background: $grad;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+      transform: scale(1.02);
+      opacity: 0.9;
+    }
+  }
+}
+
+footer {
+  padding: 40px 20px;
+  text-align: center;
+  color: $text-muted;
+}
